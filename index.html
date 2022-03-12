@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Huffman</title>
+        <title>Huffman Tree Encoder</title>
         <link rel="stylesheet" href="./css/main.css">
     </head>
     <body>
+        <div id="title">
+            <h1>Huffman Tree Encoder</h1>
+        </div>
+
         <form id="inputs">
             <label for="inputString" id="iSL">Input String</label><label for="output">Output Binary</label><label for="output">Output Tree</label><br>
             <textarea id="inputString" name="inputString" rows="4" cols="50" style="resize: none;" value="bruh" onchange="EncodeTree()"></textarea>
@@ -15,6 +19,7 @@
         <canvas id="treeCanvas" width="4000", height="2000">
 
         </canvas>
+        <p id="link">To decode, go <a href="./decode.html">here</a></p>
 
         <script src="./js/huffman.js"></script>
         <script src="./js/treeVisualiser.js"></script>

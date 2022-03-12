@@ -2,8 +2,8 @@ body {
     padding: 0%;
     margin: 0%;
     display: grid;
-    grid-template-rows: 18% 80% 2%;
-    grid-template-columns: 10% 80% 10%;
+    grid-template-rows: 8% 15% 75% 2%;
+    grid-template-columns: 15% 70% 15%;
     height: 100vh;
     width: 100vw;
     background-color: darkslategray;
@@ -11,8 +11,26 @@ body {
     color: white;
 }
 
-#inputs {
+#link {
+    grid-column: 3;
+    grid-row: 3;
+    margin-top: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+a {
+    color: aqua;
+}
+
+#title {
     grid-row: 1;
+    grid-column: 1 / span 3;
+    margin: auto;
+}
+
+#inputs {
+    grid-row: 2;
     grid-column: 1 / span 3;
     margin: auto;
     display: grid;
@@ -33,9 +51,11 @@ textarea {
 }
 
 #treeCanvas {
-    grid-row: 2;
+    grid-row: 3;
     grid-column: 2;
     background-color: rgb(28, 46, 46);
+    background-image: url("../img/YurtleGrey.png");
+    background-size: cover;
     width: 100%;
     height: 100%;
     border-radius: 10px;
