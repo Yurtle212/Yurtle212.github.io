@@ -73,9 +73,9 @@
                 let nodeSize = parseInt(document.getElementById("nodeSize").value);
 
                 let newWidth = spreadSide * 2;
-                canvas.width = Math.min(newWidth, 32767);
+                canvas.width = Math.min(newWidth + nodeSize, 32767);
                 let newHeight = spreadDown * longest + (spreadDown * 2);
-                canvas.height = Math.min(newHeight, 32767);
+                canvas.height = Math.min(newHeight + nodeSize, 32767);
 
 
                 drawTree(ht, 0, canvas.width / 2, (spreadDown + nodeSize) / 2, spreadSide, nodeSize, spreadDown);

@@ -113,6 +113,40 @@ function decodeHuffmanTree(bin, hTree) {
     return output;
 }
 
+function getTreeStats(tree) {
+    let currentPos = tree;
+    let longestContinuous = 0;
+    let longest = 0;
+
+    while (typeof(currentPos[0]) == "object") {
+        currentPos = currentPos[0][0];
+        longestContinuous++;
+    }
+    let i = 0;
+    while (typeof(currentPos[0]) == "object") {
+        currentPos = currentPos[0][0];
+        i++;
+    }
+    if (i > longestContinuous) {
+        longestContinuous = i;
+    }
+    longest = getDeepestChar(tree, 0);
+
+    return {longest: longest, longestContinuous: longestContinuous};
+}
+
+function getDeepestChar(tree, depth) {
+    //Get all the characters contained within a branch of the tree recursively
+
+    if (typeof(tree[0]) != "object") {
+        return depth;
+    }
+
+    let dl = getDeepestChar(tree[0][0], depth + 1);
+    let dr = getDeepestChar(tree[0][1], depth + 1);
+    return Math.max(dl, dr);
+}
+
 function compareSecondColumn(a, b) {
     if (a[1] === b[1]) {
         return 0;

@@ -16,6 +16,22 @@
             <textarea id="outputString" name="outputString" rows="4" cols="50" style="resize: none;" readonly></textarea>
         </form>
 
+        <div id="controls">
+            <div class="sliderDiv">
+                <label for="spreadDown" id="iSL">Vertical Spread</label>
+                <input type="range" min="0" max="500" value="150" class="slider" id="spreadDown" onchange="DecodeTree()">
+            </div>
+            <div class="sliderDiv">
+                <label for="spreadSide" id="iSL">Horizontal Spread</label>
+                <input type="range" min="0" max="500" value="100" class="slider" id="spreadSide" onchange="DecodeTree()">
+            </div>
+            <div class="sliderDiv">
+                <label for="nodeSize" id="iSL">Node Size</label>
+                <input type="range" min="0" max="500" value="100" class="slider" id="nodeSize" onchange="DecodeTree()">
+            </div>
+            
+        </div>
+
         <canvas id="treeCanvas" width="4000", height="2000">
 
         </canvas>
@@ -29,9 +45,23 @@
                 let ctx = canvas.getContext("2d");
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-                let inputTree = JSON.parse(document.getElementById("inputTree").value);
+                let ht = JSON.parse(document.getElementById("inputTree").value);
+                let stats = getTreeStats(ht);
 
-                drawTree(inputTree, 0, 2000, 100, 2000);
+                let longest = stats.longest;
+                let longestContinuous = stats.longestContinuous;
+
+                let spreadDown = parseInt(document.getElementById("spreadDown").value);
+                let spreadSide = parseInt(document.getElementById("spreadSide").value) * (2**longest);
+                let nodeSize = parseInt(document.getElementById("nodeSize").value);
+
+                let newWidth = spreadSide * 2;
+                canvas.width = Math.min(newWidth + nodeSize, 32767);
+                let newHeight = spreadDown * longest + (spreadDown * 2);
+                canvas.height = Math.min(newHeight + nodeSize, 32767);
+
+
+                drawTree(ht, 0, canvas.width / 2, (spreadDown + nodeSize) / 2, spreadSide, nodeSize, spreadDown);
             }
 
             function DecodeString() {
