@@ -1,0 +1,9 @@
+body {
+    padding: 0%;
+    margin: 0%;
+    display: grid;
+    grid-template-rows: 10% 80% 10%;
+    grid-template-columns: 10% 80% 10%;
+    height: 100vh;
+    width: 100vw;
+}
