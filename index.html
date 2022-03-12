@@ -5,14 +5,20 @@
         <link rel="stylesheet" href="./css/main.css">
     </head>
     <body>
+        <canvas id="treeCanvas" width="2000", height="1000">
+
+        </canvas>
 
         <script src="./js/huffman.js"></script>
+        <script src="./js/treeVisualiser.js"></script>
         <script>
             let fc = getCharFrequency("Hello there.");
             let ht = encodeHuffmanTree(fc);
-            //console.log(ht);
             let decoded = decodeHuffmanTree("110111001101", ht);
             console.log(decoded);
+
+            drawLine(0, 0, 200, 200);
+            drawNode(200, 200, "15", false);
         </script>
     </body>
 </html>
