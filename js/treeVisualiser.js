@@ -35,7 +35,7 @@ function drawTree(tree, level, x, y, spread) {
     }
 
     spread = spread/2;
-    let levelHeight = 250;
+    let levelHeight = 200;
 
     drawNode(x, y, tree[1], false);
     drawLine(x, y, x + spread, y + levelHeight)
