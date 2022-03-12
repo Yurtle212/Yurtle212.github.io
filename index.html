@@ -5,20 +5,33 @@
         <link rel="stylesheet" href="./css/main.css">
     </head>
     <body>
-        <canvas id="treeCanvas" width="2000", height="1000">
+        <form id="inputs">
+            <label for="inputString" id="iSL">Input String</label><label for="output">Output Binary</label><label for="output">Output Tree</label><br>
+            <textarea id="inputString" name="inputString" rows="4" cols="50" style="resize: none;" value="bruh" onchange="EncodeTree()"></textarea>
+            <textarea id="output" name="output" rows="4" cols="50" style="resize: none;" readonly></textarea>
+            <textarea id="outputTree" name="outputTree" rows="4" cols="50" style="resize: none;" readonly></textarea>
+        </form>
+
+        <canvas id="treeCanvas" width="4000", height="2000">
 
         </canvas>
 
         <script src="./js/huffman.js"></script>
         <script src="./js/treeVisualiser.js"></script>
         <script>
-            let fc = getCharFrequency("Hello there.");
-            let ht = encodeHuffmanTree(fc);
-            let decoded = decodeHuffmanTree("110111001101", ht);
-            console.log(decoded);
+            function EncodeTree() {
+                let canvas = document.getElementById("treeCanvas");
+                let ctx = canvas.getContext("2d");
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            drawLine(0, 0, 200, 200);
-            drawNode(200, 200, "15", false);
+                let inputString = document.getElementById("inputString").value;
+                let encoded = encodeHuffmanTree(inputString);
+                let ht = encoded.tree;
+                document.getElementById("output").value = encoded.encoded;
+                document.getElementById("outputTree").value = encoded.stringTree;
+
+                drawTree(ht, 0, 2000, 200, 2000);
+            }
         </script>
     </body>
 </html>

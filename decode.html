@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Huffman</title>
+        <link rel="stylesheet" href="./css/main.css">
+    </head>
+    <body>
+        <form id="inputs">
+            <label for="inputTree">Input Tree</label><label for="inputBinary">Input Binary</label><label for="outputString" id="iSL">Output String</label><br>
+            <textarea id="inputTree" name="inputTree" rows="4" cols="50" style="resize: none;" onchange="DecodeTree(); DecodeString();"></textarea>
+            <textarea id="inputBinary" name="inputBinary" rows="4" cols="50" style="resize: none;" onchange="DecodeString();" onkeyup="this.value = this.value.replace(/[^10]/g, '')"></textarea>
+            <textarea id="outputString" name="outputString" rows="4" cols="50" style="resize: none;" readonly></textarea>
+        </form>
+
+        <canvas id="treeCanvas" width="4000", height="2000">
+
+        </canvas>
+
+        <script src="./js/huffman.js"></script>
+        <script src="./js/treeVisualiser.js"></script>
+        <script>
+            function DecodeTree() {
+                let canvas = document.getElementById("treeCanvas");
+                let ctx = canvas.getContext("2d");
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                let inputTree = JSON.parse(document.getElementById("inputTree").value);
+
+                drawTree(inputTree, 0, 2000, 200, 2000);
+            }
+
+            function DecodeString() {
+                if (document.getElementById("inputTree").value != undefined) {
+                    let inputTree = JSON.parse(document.getElementById("inputTree").value);
+                    let inputBinary = document.getElementById("inputBinary").value;
+                    if (inputBinary != undefined) {
+                        let output = decodeHuffmanTree(inputBinary, inputTree);
+                        document.getElementById("outputString").value = output;
+                    }
+                }
+            }
+        </script>
+    </body>
+</html>
