@@ -19,15 +19,34 @@
         <canvas id="treeCanvas" width="4000", height="2000">
 
         </canvas>
+        <div id="controls">
+            <div class="sliderDiv">
+                <label for="spreadDown" id="iSL">Vertical Spread</label>
+                <input type="range" min="0" max="500" value="150" class="slider" id="spreadDown" onchange="EncodeTree()">
+            </div>
+            <div class="sliderDiv">
+                <label for="spreadSide" id="iSL">Horizontal Spread</label>
+                <input type="range" min="0" max="500" value="100" class="slider" id="spreadSide" onchange="EncodeTree()">
+            </div>
+            <div class="sliderDiv">
+                <label for="nodeSize" id="iSL">Node Size</label>
+                <input type="range" min="0" max="500" value="100" class="slider" id="nodeSize" onchange="EncodeTree()">
+            </div>
+            
+        </div>
         <p id="link">To decode, go <a href="./decode.html">here</a></p>
 
         <script src="./js/huffman.js"></script>
         <script src="./js/treeVisualiser.js"></script>
         <script>
             function EncodeTree() {
+                if (document.getElementById("inputString").value == undefined && document.getElementById("inputString").value == "") {
+                    return;
+                }
                 let canvas = document.getElementById("treeCanvas");
                 let ctx = canvas.getContext("2d");
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.stroke();
 
                 let inputString = document.getElementById("inputString").value;
                 let encoded = encodeHuffmanTree(inputString);
@@ -35,7 +54,32 @@
                 document.getElementById("output").value = encoded.encoded;
                 document.getElementById("outputTree").value = encoded.stringTree;
 
-                drawTree(ht, 0, 2000, 200, 2000);
+                //console.log(encoded.path);
+                let longest = 0;
+                let longestContinuous = 0;
+                for (const key of Object.keys(encoded.path)) {
+                    //console.log(key);
+                    //console.log(encoded.path[key]);
+                    if (encoded.path[key].length > longest) {
+                        longest = encoded.path[key].length;
+                    }
+                    if ((!(encoded.path[key].includes("1")) && encoded.path[key].length > longestContinuous) || (!(encoded.path[key].includes("0")) && encoded.path[key].length > longestContinuous)) {
+                        longestContinuous = encoded.path[key].length;
+                    }
+                }
+
+                let spreadDown = parseInt(document.getElementById("spreadDown").value);
+                let spreadSide = parseInt(document.getElementById("spreadSide").value) * (2**longest);
+                let nodeSize = parseInt(document.getElementById("nodeSize").value);
+
+                let newWidth = spreadSide * 2;
+                canvas.width = Math.min(newWidth, 32767);
+                let newHeight = spreadDown * longest + (spreadDown * 2);
+                canvas.height = Math.min(newHeight, 32767);
+
+
+                drawTree(ht, 0, canvas.width / 2, (spreadDown + nodeSize) / 2, spreadSide, nodeSize, spreadDown);
+                //ctx.font = `${999}px Arial`;
             }
         </script>
     </body>

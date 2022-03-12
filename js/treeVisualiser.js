@@ -1,4 +1,4 @@
-const nodeSize = 100;
+const smallestNodeSize = 100;
 
 function drawLine(x1, y1, x2, y2) {
     let canvas = document.getElementById("treeCanvas");
@@ -9,7 +9,7 @@ function drawLine(x1, y1, x2, y2) {
     ctx.stroke();
 }
 
-function drawNode(x, y, text, isChar) {
+function drawNode(x, y, text, isChar, nodeSize) {
     let img = new Image();
     if (isChar) {
         img.src = '../img/letterNode.png';
@@ -28,18 +28,19 @@ function drawNode(x, y, text, isChar) {
     }
 }
 
-function drawTree(tree, level, x, y, spread) {
+function drawTree(tree, level, x, y, spread, nodeSize, height) {
     if (typeof(tree[0]) != "object") {
-        drawNode(x, y, tree[0][0], true);
+        drawNode(x, y, tree[0][0], true, nodeSize);
         return;
     }
 
     spread = spread/2;
-    let levelHeight = 200;
+    let levelHeight = height;
+    let nextNodeSize = nodeSize;
 
-    drawNode(x, y, tree[1], false);
+    drawNode(x, y, tree[1], false, nodeSize);
     drawLine(x, y, x + spread, y + levelHeight)
     drawLine(x, y, x - spread, y + levelHeight)
-    drawTree(tree[0][0], level + 1, x + spread, y + levelHeight, spread);
-    drawTree(tree[0][1], level + 1, x - spread, y + levelHeight, spread);
+    drawTree(tree[0][0], level + 1, x + spread, y + levelHeight, spread, nextNodeSize, levelHeight);
+    drawTree(tree[0][1], level + 1, x - spread, y + levelHeight, spread, nextNodeSize, levelHeight);
 }
